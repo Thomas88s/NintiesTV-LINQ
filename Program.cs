@@ -133,58 +133,65 @@ namespace NinetiesTV
         // 15. Return the show with the most episodes.
         static Show MostEpisodes(List<Show> shows)
         {
-            throw new NotImplementedException();
+
+            return shows.FirstOrDefault(s => s.EpisodeCount == shows.Max(s => s.EpisodeCount));
         }
 
         // 16. Order the shows by their ending year then return the first 
         //     show that ended on or after the year 2000.
         static Show EndedFirstAfterTheMillennium(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows.OrderBy(s => s.EndYear).FirstOrDefault(s => s.EndYear >= 2000);
         }
 
         // 17. Order the shows by rating (highest first) 
         //     and return the first show with genre of drama.
         static Show BestDrama(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows.OrderByDescending(s => s.ImdbRating).First(s => s.Genres.Contains("Drama"));
         }
 
         // 18. Return all dramas except for the highest rated.
         static List<Show> AllButBestDrama(List<Show> shows)
         {
-            throw new NotImplementedException();
+
+            return shows.OrderByDescending(s => s.ImdbRating).Where(s => s.Genres.Contains("Drama")).Skip(1).ToList();
         }
 
         // 19. Return the number of crime shows with an IMDB rating greater than 7.0.
         static int GoodCrimeShows(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows.Count(s => s.ImdbRating > 7.0);
         }
 
         // 20. Return the first show that ran for more than 10 years 
         //     with an IMDB rating of less than 8.0 ordered alphabetically.
         static Show FirstLongRunningTopRated(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows.Where(s => s.EndYear - s.StartYear > 10).First(s => s.ImdbRating < 8.0);
         }
 
         // 21. Return the show with the most words in the name.
         static Show WordieastName(List<Show> shows)
         {
-            throw new NotImplementedException();
+            return shows.First(s => s.Name.Length == shows.Max(s => s.Name.Length));
         }
 
         // 22. Return the names of all shows as a single string seperated by a comma and a space.
         static string AllNamesWithCommas(List<Show> shows)
         {
-            throw new NotImplementedException();
+            IEnumerable<string> showNames = shows.Select(s => s.Name);
+            return String.Join(", ", showNames);
         }
 
         // 23. Do the same as above, but put the word "and" between the second-to-last and last show name.
         static string AllNamesWithCommasPlsAnd(List<Show> shows)
         {
-            throw new NotImplementedException();
+            List<string> allButLast = shows.Take(shows.Count() - 2).Select(s => s.Name).ToList();
+            List<string> lastShows = shows.Skip(shows.Count() - 2).Select(s => s.Name).ToList();
+            var concatenatedShowNames = String.Join(", ", allButLast);
+            concatenatedShowNames += $", {String.Join(" and ", lastShows)}";
+            return concatenatedShowNames;
         }
 
 
